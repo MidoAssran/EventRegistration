@@ -17,6 +17,7 @@ import ca.mcgill.ecse321.eventregistration.model.Event;
 import ca.mcgill.ecse321.eventregistration.model.Participant;
 import ca.mcgill.ecse321.eventregistration.model.Registration;
 import ca.mcgill.ecse321.eventregistration.model.RegistrationManager;
+import ca.mcgill.ecse321.eventregistration.persistence.PersistenceEventRegistration;
 import ca.mcgill.ecse321.eventregistration.persistence.PersistenceXStream;
 
 public class TestEventRegistrationController {
@@ -31,11 +32,60 @@ public class TestEventRegistrationController {
 		PersistenceXStream.setAlias("manager", RegistrationManager.class);
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		PersistenceXStream.setFilename("test"+File.separator+"ca"+File.separator+"mcgill"+File.separator+"ecse321"+File.separator+"eventregistration"+
+				File.separator+"controller"+File.separator+"data.xml");
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 		// clear all registrations
 		RegistrationManager rm = RegistrationManager.getInstance();
 		rm.delete();
+	}
+	
+	@Test
+	public void testSetFilenameAndRegister() {
+		PersistenceEventRegistration.setFilename("test"+File.separator+"ca"+File.separator+"mcgill"+File.separator+"ecse321"+File.separator+"eventregistration"+
+				File.separator+"controller"+File.separator+"testfilename.xml");
+		
+		RegistrationManager rm = RegistrationManager.getInstance();
+		assertEquals(0, rm.getRegistrations().size());
+		
+		String nameP = "LeMonde";
+		Participant participant = new Participant(nameP);
+		rm.addParticipant(participant);
+		assertEquals(1, rm.getParticipants().size());
+		
+		String nameE = "World Knitting Competition";
+		Calendar c = Calendar.getInstance();
+		c.set(2016,Calendar.OCTOBER,16,9,00,0);
+		Date eventDate = new Date(c.getTimeInMillis());
+		Time startTime = new Time(c.getTimeInMillis());
+		c.set(2016,Calendar.OCTOBER,16,10,30,0);
+		Time endTime = new Time(c.getTimeInMillis());
+		Event event = new Event(nameE, eventDate, startTime, endTime);
+		rm.addEvent(event);
+		assertEquals(1, rm.getEvents().size());
+		
+		EventRegistrationController erc = new EventRegistrationController();
+		try {
+			erc.register(participant, event);
+		} catch (InvalidInputException e) {
+			// check that no error occurred
+			fail();
+		}
+		
+		// check model in memory
+		checkResultRegister(nameP, nameE, eventDate, startTime, endTime, rm);
+		
+		RegistrationManager rm2 = (RegistrationManager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		// check file contents
+		checkResultRegister(nameP, nameE, eventDate, startTime, endTime, rm2);
+		
+		
 	}
 
 	@Test
