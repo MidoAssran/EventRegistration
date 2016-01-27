@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     RegistrationManager rm;
     HashMap<Integer, Participant> participants;
+    String error = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Log.i("Creation", getFilesDir().getAbsolutePath() + "eventregistration.xml");
         PersistenceEventRegistration.setFilename(getFilesDir().getAbsolutePath() + "eventregistration.xml");
 
         // load model
@@ -54,26 +54,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshData() {
-        // Initialize the data in the participant spinner
-        Spinner spinner = (Spinner) findViewById(R.id.participantspinner);
+        TextView etv = (TextView) findViewById(R.id.errormessage);
+        etv.setText(this.error);
 
-        ArrayAdapter<CharSequence> participantAdapter = new
-                ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item);
-
-        participantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        this.participants = new HashMap<Integer, Participant>();
-        int i = 0;
-        for (Iterator<Participant> participants = rm.getParticipants().iterator();
-             participants.hasNext(); i++) {
-            Participant p = participants.next();
-            participantAdapter.add(p.getName());
-            this.participants.put(i, p);
+        if (error == null || error.length() == 0) {
+            // Initialize the data in the participant spinner
+            Spinner spinner = (Spinner) findViewById(R.id.participantspinner);
+            ArrayAdapter<CharSequence> participantAdapter = new
+                    ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item);
+            participantAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            this.participants = new HashMap<Integer, Participant>();
+            int i = 0;
+            for (Iterator<Participant> participants = rm.getParticipants().iterator();
+                 participants.hasNext(); i++) {
+                Participant p = participants.next();
+                participantAdapter.add(p.getName());
+                this.participants.put(i, p);
+            }
+            spinner.setAdapter(participantAdapter);
+            TextView tv = (TextView) findViewById(R.id.newparticipant_name);
+            tv.setText("");
         }
-
-        spinner.setAdapter(participantAdapter);
-        TextView tv = (TextView) findViewById(R.id.newparticipant_name);
-        tv.setText("");
     }
 
     @Override
@@ -99,13 +100,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addParticipant(View v) {
-        Log.i("Add Participant", "I'm here Mido");
         TextView tv = (TextView) findViewById(R.id.newparticipant_name);
         EventRegistrationController pc = new EventRegistrationController();
+        error = null;
         try {
             pc.createParticipant(tv.getText().toString());
         } catch (InvalidInputException e) {
-            Log.e("Add Participant Error", e.getMessage());
+            error = e.getMessage();
         }
 
         refreshData();
