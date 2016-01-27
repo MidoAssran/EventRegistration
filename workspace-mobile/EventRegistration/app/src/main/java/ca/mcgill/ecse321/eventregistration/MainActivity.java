@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         refreshData();
+
     }
 
     public void refreshData() {
