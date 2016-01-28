@@ -1,9 +1,9 @@
 <?php
-require_once (__DIR__.'/../controller/Controller.php');
-require_once (__DIR__.'/../persistence/PersistenceEventRegistration.php');
-require_once (__DIR__.'/../model/RegistrationManager.php');
-require_once (__DIR__.'/../model/Participant.php');
-require_once (__DIR__.'/../model/Event.php');
+require_once 'FULLPATH\EventRegistration\controller\Controller.php';
+require_once 'FULLPATH\EventRegistration\persistence\PersistenceEventRegistration.php';
+require_once 'FULLPATH\EventRegistration\model\RegistrationManager.php';
+require_once 'FULLPATH\EventRegistration\model\Participant.php';
+require_once 'FULLPATH\EventRegistration\model\Event.php';
 
 class ControllerTest extends PHPUnit_Framework_TestCase
 {

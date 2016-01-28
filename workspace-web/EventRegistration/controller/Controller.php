@@ -1,9 +1,9 @@
 <?php
-//require_once 'InputValidator.php';
-// require_once 'PersistenceEventRegistration.php';
-// require_once 'Participant.php';
-// require_once 'Registration.php';
-// require_once 'RegistrationManager.php';
+require_once 'InputValidator.php';
+require_once 'PersistenceEventRegistration.php';
+require_once 'Participant.php';
+require_once 'Registration.php';
+require_once 'RegistrationManager.php';
 
 class Controller
 {
