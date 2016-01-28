@@ -14,7 +14,7 @@ class Controller
 	public function createParticipant($participant_name) {
 		// 1. Validate Input
 		$name = InputValidator::validate_input($participant_name);
-		if ($name == null) || strlen($name) == 0) {
+		if ($name == null || strlen($name) == 0) {
 			throw new Exception("Participant name cannot be empty!");
 		} else {
 			// 2. Load all of the data
