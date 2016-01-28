@@ -57,5 +57,18 @@
 			</p>
 			<input type="submit" value="Add Participant" />
 		</form>
+
+		<form action="addevent.php" method="post">
+			<p>Name? <input type="text" name="event_name" />
+				<span class="error">
+					<?php
+					if (isset($_SESSION['errorEventName']) && !empty($_SESSION['errorEventName'])) {
+						echo " * " . $_SESSION["errorEventName"];
+					}
+					?>
+				</span>
+			</p>
+			<input type="submit" value="Add Event" />
+		</form>
 	</body>
 </html>
