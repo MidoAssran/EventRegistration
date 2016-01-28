@@ -6,7 +6,7 @@
     <string name="register_button">Register</string>
     <string name="newevent_date_label">Date?</string>
     <string name="newevent_start_time">Start time?</string>
-    <string name="newevent_date_first">01-01-2015</string>
+    <string name="newevent_date_first">01-01-2016</string>
     <string name="newevent_hint">Event name?</string>
     <string name="newevent_start_time_label">Start time?</string>
     <string name="newevent_start_time_default">12:00</string>

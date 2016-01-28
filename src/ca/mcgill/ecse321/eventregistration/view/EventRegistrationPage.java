@@ -287,8 +287,8 @@ public class EventRegistrationPage extends JFrame {
 		// JSpinner actually returns a date and time
 		// force the same date for start and end time to ensure that only the times differ
 		Calendar calendar = Calendar.getInstance();
-		calendar.set(2000, 1, 1);
 		calendar.setTime((Date) startTimeSpinner.getValue());
+		calendar.set(2000, 1, 1);
 		Time startTime = new Time(calendar.getTime().getTime());
 		calendar.setTime((Date) endTimeSpinner.getValue());
 		calendar.set(2000, 1, 1);
