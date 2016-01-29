@@ -34,8 +34,21 @@ class Controller
 	public function createEvent($event_name, $event_date, $starttime, $endtime) {
 		// 1. Validate Input
 		$name = InputValidator::validate_input($event_name);
+
+		// Reformat Input
+		date('Y-m-d', strtotime($event_date));
+		date('H:i', strtotime($starttime));
+		date('H:i', strtotime($endtime));
+
+		// Check Validity
 		if ($name == null || strlen($name) == 0) {
 			throw new Exception("Event name cannot be empty!");
+		} elseif (strtotime($event_date) == false) {
+			throw new Exception("Invalid Date!");
+		} elseif (strtotime($starttime) == false) {
+			throw new Exception("Invalid Start Time!");
+		} elseif (strtotime($endtime) == false) {
+			throw new Exception("Invalid End Time!");
 		} else {
 			// 2. Load all of the data
 			$pm = new PersistenceEventRegistration();
@@ -77,7 +90,6 @@ class Controller
 		$error = "";
 		if ($myParticipant != NULL && $myEvent != NULL) {
 			$myRegistration = new Registration($myParticipant, $myEvent);
-			echo "test " . is_object($myRegistration);
 			$rm->addRegistration($myRegistration);
 			$pm->writeDataToStore($rm);
 		} else {
