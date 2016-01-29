@@ -55,7 +55,7 @@
 					?>
 				</span>
 			</p>
-			<input type="submit" value="Add Participant" />
+			<p><input type="submit" value="Add Participant" /></p>
 		</form>
 
 	 		<form action="addevent.php" method="post">
@@ -63,14 +63,62 @@
 				<span class="error">
 					<?php
 					if (isset($_SESSION['errorEventName']) && !empty($_SESSION['errorEventName'])) {
-						echo " * " . $_SESSION["errorEventName"];
+						$arr = explode("@", $_SESSION['errorEventName']);
+						foreach ($arr as $val){
+							if (substr($val,0,1) == "1"){
+								echo " * " . substr($val, 1);
+								break;
+							}
+						}
 					}
 					?>
 				</span>
 			</p>
-			<input type="date" name="event_date" value="<?php echo date('Y-m-d'); ?>" />
-			<input type="time" name="starttime" value="<?php echo date('H:i'); ?>" />
-			<input type="time" name="endtime" value="<?php echo date('H:i'); ?>" />
+			<p>Date? <input type="date" name="event_date" value="<?php echo date('Y-m-d'); ?>" />
+				<span class="error">
+					<?php
+					if (isset($_SESSION['errorEventName']) && !empty($_SESSION['errorEventName'])) {
+						$arr = explode("@", $_SESSION['errorEventName']);
+						foreach ($arr as $val){
+							if (substr($val,0,1) == "2"){
+								echo " * " . substr($val, 1);
+								break;
+							}
+						}
+					}
+					?>
+				</span>
+			</p>
+			<p>Start time? <input type="time" name="starttime" value="<?php echo date('H:i'); ?>" />
+				<span class="error">
+					<?php
+					if (isset($_SESSION['errorEventName']) && !empty($_SESSION['errorEventName'])) {
+						$arr = explode("@", $_SESSION['errorEventName']);
+						foreach ($arr as $val){
+							if (substr($val,0,1) == "3"){
+								echo " * " . substr($val, 1);
+								break;
+							}
+						}
+					}
+					?>
+				</span>
+			</p>
+			<p>End time?<input type="time" name="endtime" value="<?php echo date('H:i'); ?>" />
+				<span class="error">
+					<?php
+					if (isset($_SESSION['errorEventName']) && !empty($_SESSION['errorEventName'])) {
+						$arr = explode("@", $_SESSION['errorEventName']);
+						foreach ($arr as $val){
+							if (substr($val,0,1) == "4"){
+								echo " * " . substr($val, 1);
+								break;
+							}
+						}
+					}
+					?>
+				</span>
+			</p>
 			<input type="submit" value="Add Event" />
 		</form>
 	</body>
