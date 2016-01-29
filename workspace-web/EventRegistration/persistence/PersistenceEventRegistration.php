@@ -1,5 +1,6 @@
 <?php
-class PersistenceEventRegistration { private $filename;
+class PersistenceEventRegistration {
+	private $filename;
 	function __construct($filename = 'data.txt') {
 		$this->filename = $filename;
 	}

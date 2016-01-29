@@ -1,9 +1,10 @@
 <?php
-require_once 'InputValidator.php';
-require_once 'PersistenceEventRegistration.php';
-require_once 'Participant.php';
-require_once 'Registration.php';
-require_once 'RegistrationManager.php';
+require_once "controller/InputValidator.php";
+require_once "persistence/PersistenceEventRegistration.php";
+require_once "model/Participant.php";
+require_once "model/Event.php";
+require_once "model/Registration.php";
+require_once "model/RegistrationManager.php";
 
 class Controller
 {
@@ -31,7 +32,22 @@ class Controller
 	}
 	
 	public function createEvent($event_name, $event_date, $starttime, $endtime) {
-		
+		// 1. Validate Input
+		$name = InputValidator::validate_input($event_name);
+		if ($name == null || strlen($name) == 0) {
+			throw new Exception("Event name cannot be empty!");
+		} else {
+			// 2. Load all of the data
+			$pm = new PersistenceEventRegistration();
+			$rm = $pm->loadDataFromStore();
+
+			// 3. Add the new event
+			$event = new Event($name, $event_date, $starttime, $endtime);
+			$rm->addEvent($event);
+
+			// 4. Write all of the data
+			$pm->writeDataToStore($rm);
+		}
 	}
 	
 	public function register($aParticipant, $aEvent) {
@@ -41,7 +57,7 @@ class Controller
 
 		// 2. Find the participant
 		$myParticipant = NULL;
-		foreach ($$rm->getParticipants() as $participant) {
+		foreach ($rm->getParticipants() as $participant) {
 			if (strcmp($participant->getName(), $aParticipant) == 0) {
 				$myParticipant = $participant;
 				break;
@@ -57,9 +73,11 @@ class Controller
 			}
 		}
 
+		// 4. Register for the event
 		$error = "";
 		if ($myParticipant != NULL && $myEvent != NULL) {
-			$myRegistration - new Registration($myParticipant, $myEvent);
+			$myRegistration = new Registration($myParticipant, $myEvent);
+			echo "test " . is_object($myRegistration);
 			$rm->addRegistration($myRegistration);
 			$pm->writeDataToStore($rm);
 		} else {
