@@ -74,7 +74,7 @@ class RegistrationManager
     $index = 0;
     foreach($this->registrations as $registration)
     {
-      if ($registration->equals($aRegistration))
+      if ($registration == $aRegistration)
       {
         $wasFound = true;
         break;
