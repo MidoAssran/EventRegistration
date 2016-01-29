@@ -2,8 +2,11 @@
 require_once 'controller/Controller.php';
 
 session_start();
-$_SESSION["errorRegisterParticipant"] = "";
+// Clearing unrelated errors
 $_SESSION["errorRegisterEvent"] = "";
+$_SESSION["errorRegisterParticipant"] = "";
+$_SESSION["errorParticipantName"] = "";
+$_SESSION["errorEventName"] = "";	
 $c = new Controller();
 try {
 $participant = NULL;

@@ -12,20 +12,31 @@
         <endTime id="8">19:00:00</endTime>
       </event>
     </registration>
+    <registration id="9">
+      <id>1</id>
+      <participant id="10">
+        <name>Jennifer</name>
+      </participant>
+      <event id="11">
+        <name>Dance Recital (Hosted by Davent)</name>
+        <eventDate id="12">2016-01-18</eventDate>
+        <startTime id="13">16:03:29</startTime>
+        <endTime id="14">17:03:00</endTime>
+      </event>
+    </registration>
   </registrations>
-  <participants id="9">
+  <participants id="15">
     <participant reference="4"/>
-    <participant id="10">
-      <name>Jennifer</name>
-    </participant>
-    <participant id="11">
+    <participant reference="10"/>
+    <participant id="16">
       <name>Martin</name>
     </participant>
-    <participant id="12">
+    <participant id="17">
       <name>Henry</name>
     </participant>
   </participants>
-  <events id="13">
+  <events id="18">
     <event reference="5"/>
+    <event reference="11"/>
   </events>
 </manager>
